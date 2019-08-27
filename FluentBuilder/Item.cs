@@ -23,8 +23,7 @@
     }
     public class ItemQuantityBuilder : ItemNameBuilder
     {
-
-        public ItemQuantityBuilder WithQuantiry(int quantity)
+        public ItemQuantityBuilder WithQuantity(int quantity)
         {
             _item.Quantity = quantity;
             return this;
