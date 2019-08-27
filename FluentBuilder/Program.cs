@@ -6,8 +6,8 @@ namespace FluentBuilder
     {
         static void Main(string[] args)
         {
-            var item = new ItemQuantityBuilder().WithQuantity(123).WithName("asd").Build();
-            var item2 = new ItemQuantityBuilder().WithName("asd").WithQuantity(123).Build(); // the problem
+            var item = new Item().New.WithQuantity(123).WithName("asd").Build();
+            var item2 = new Item().New.WithName("asd").WithQuantity(123).Build();
         }
     }
 }

@@ -4,29 +4,40 @@
     {
         public string Name;
         public int Quantity;
+        public Builder New => new Builder();
     }
 
-    public class ItemNameBuilder
+    public class Builder : ItemQuantityBuilder<Builder>
     {
-        protected Item _item = new Item();
 
-        public ItemNameBuilder WithName(string name)
-        {
-            _item.Name = name;
-            return this;
-        }
+    }
 
+    public abstract class ItemBuilder
+    {
+        protected Item Item = new Item();
         public Item Build()
         {
-            return _item;
+            return Item;
         }
     }
-    public class ItemQuantityBuilder : ItemNameBuilder
+
+    public class ItemNameBuilder<T> : ItemBuilder where T : ItemNameBuilder<T>
     {
-        public ItemQuantityBuilder WithQuantity(int quantity)
+        //substituted with Builder : ItemQuantityBuilder<Builder>
+        public T WithName(string name)
         {
-            _item.Quantity = quantity;
-            return this;
+            Item.Name = name;
+            return (T) this; //cast is safe due to constraint.
+        }
+    }
+
+    public class ItemQuantityBuilder<T> : ItemNameBuilder<ItemQuantityBuilder<T>> where T:ItemQuantityBuilder<T>
+    {
+        //same substitution
+        public T WithQuantity(int quantity)
+        {
+            Item.Quantity = quantity;
+            return (T) this;
         }
     }
 }
